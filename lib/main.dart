@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagination_app/post_overview_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: PostScreen(),
     );
   }
 }

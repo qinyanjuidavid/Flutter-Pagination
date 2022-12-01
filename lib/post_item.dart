@@ -9,7 +9,7 @@ class PostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      // height: 220,
       width: 200,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),

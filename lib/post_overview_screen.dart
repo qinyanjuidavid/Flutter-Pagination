@@ -19,6 +19,7 @@ class _PostScreenState extends State<PostScreen> {
   final int _numberOfPostsPerRequest = 10;
   late List<Post> _posts;
   final int _nextPageTrigger = 3;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
@@ -28,11 +29,25 @@ class _PostScreenState extends State<PostScreen> {
     _isLastPage = false;
     _loading = true;
     _error = false;
+    _scrollController = ScrollController();
     fetchData();
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels > nextPageTrigger) {
+        _loading = true;
+        fetchData();
+      }
+    });
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -60,6 +75,7 @@ class _PostScreenState extends State<PostScreen> {
       }
     }
     return ListView.builder(
+        controller: _scrollController,
         itemCount: _posts.length + (_isLastPage ? 0 : 1),
         itemBuilder: (context, index) {
           if (index == _posts.length - _nextPageTrigger) {
